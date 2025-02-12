@@ -20,7 +20,7 @@ final class HomeRouter: BaseRouter {
     static func showSpendViewController(in navigationController: UINavigationController) {
         let viewController = ViewControllerFactory.makeSpendViewController()
         viewController.navigationItem.hidesBackButton = true
-        navigationController.navigationBar.isHidden = true
+        navigationController.navigationBar.isHidden = false
         viewController.modalPresentationStyle = .pageSheet
 
         if let sheet = viewController.sheetPresentationController {
@@ -34,7 +34,7 @@ final class HomeRouter: BaseRouter {
     static func showReceiveViewController(in navigationController: UINavigationController) {
         let viewController = ViewControllerFactory.makeReceiveViewController()
         viewController.navigationItem.hidesBackButton = true
-        navigationController.navigationBar.isHidden = true
+        navigationController.navigationBar.isHidden = false
         viewController.modalPresentationStyle = .pageSheet
 
         if let sheet = viewController.sheetPresentationController {

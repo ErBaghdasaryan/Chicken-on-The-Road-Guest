@@ -170,7 +170,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate {
         }
 
         promoText.snp.makeConstraints { view in
-            view.top.equalTo(buttonsStack.snp.bottom).offset(40)
+            view.top.equalTo(buttonsStack.snp.bottom).offset(50)
             view.leading.equalToSuperview().offset(16)
             view.trailing.equalToSuperview().inset(16)
             view.height.equalTo(30)
