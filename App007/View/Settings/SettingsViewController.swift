@@ -53,7 +53,7 @@ class SettingsViewController: BaseViewController {
         self.privacy.setTitle("Privacy Policy", for: .normal)
         self.terms.setTitle("Terms", for: .normal)
 
-        self.ntfSwitch.isOn = true
+        self.ntfSwitch.isOn = false
         ntfSwitch.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
 
         self.view.addSubview(header)
@@ -143,7 +143,9 @@ extension SettingsViewController {
 
     @objc func backTapped() {
         guard let navigationController = self.navigationController else { return }
-        navigationController.popViewController(animated: true)
+        HomeRouter.popViewController(in: navigationController) {
+            navigationController.navigationBar.isHidden = false
+        }
     }
 
     @objc func descriptionTapped() {

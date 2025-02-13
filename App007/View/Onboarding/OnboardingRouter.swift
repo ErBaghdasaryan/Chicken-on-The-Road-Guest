@@ -14,6 +14,7 @@ final class OnboardingRouter: BaseRouter {
         let viewController = ViewControllerFactory.makeHomeViewController()
         viewController.navigationItem.hidesBackButton = true
         navigationController.navigationBar.isHidden = false
+        navigationController.navigationBar.backgroundColor = .clear
         navigationController.pushViewController(viewController, animated: true)
     }
 }

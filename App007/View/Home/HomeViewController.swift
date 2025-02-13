@@ -17,7 +17,6 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate {
     private let contentView = UIView()
 
     private let headerImage = UIImageView(image: UIImage(named: "chicken"))
-    private let leftHeaderImage = UIImageView(image: UIImage(named: "leftHeader"))
     private let fireImage = UIImageView(image: UIImage(named: "fireIllustration"))
     private let untilButtons = UIView()
     private let spend = UIButton(type: .system)
@@ -35,6 +34,13 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate {
                                    font: UIFont(name: "Knewave-Regular", size: 32))
     var collectionView: UICollectionView!
 
+    let dimmingView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.9)
+        view.alpha = 0
+        return view
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         makeButtonsAction()
@@ -45,7 +51,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate {
 
         self.view.backgroundColor = UIColor(hex: "#161824")
         scrollView.contentInsetAdjustmentBehavior = .never
-        self.navigationController?.hidesBarsOnSwipe = true
+        self.navigationController?.hidesBarsOnSwipe = false
 
         self.untilButtons.backgroundColor = UIColor(hex: "#3A3D51")
         self.untilButtons.layer.masksToBounds = true
@@ -62,7 +68,6 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate {
         self.spend.backgroundColor = UIColor(hex: "#FFC21A")
         self.spend.layer.masksToBounds = true
         self.spend.layer.cornerRadius = 30
-
 
         self.receive.setTitle("Receive C", for: .normal)
         self.receive.setTitleColor(.white, for: .normal)
@@ -106,7 +111,6 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate {
         self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         self.contentView.addSubview(headerImage)
-        self.contentView.addSubview(leftHeaderImage)
         self.contentView.addSubview(untilButtons)
         self.contentView.addSubview(fireImage)
         self.contentView.addSubview(buttonsStack)
@@ -114,6 +118,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate {
         self.contentView.addSubview(promosStack)
         self.contentView.addSubview(menuText)
         self.contentView.addSubview(collectionView)
+        self.view.addSubview(dimmingView)
         setupConstraints()
         setupNavigationItems()
     }
@@ -139,13 +144,6 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate {
             view.centerX.equalToSuperview()
             view.height.equalTo(252)
             view.width.equalTo(233)
-        }
-
-        leftHeaderImage.snp.makeConstraints { view in
-            view.top.equalToSuperview().offset(68)
-            view.leading.equalToSuperview().offset(16)
-            view.height.equalTo(24)
-            view.width.equalTo(80)
         }
 
         fireImage.snp.makeConstraints { view in
@@ -197,6 +195,10 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate {
             view.height.equalTo(184)
             view.bottom.equalToSuperview().inset(20)
         }
+
+        dimmingView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 
 }
@@ -227,6 +229,16 @@ extension HomeViewController {
         let barButton = UIBarButtonItem(customView: addButton)
         navigationItem.rightBarButtonItem = barButton
         self.navigationController?.navigationBar.tintColor = .white
+
+        let leftImageView = UIImageView(image: UIImage(named: "leftHeader"))
+        leftImageView.contentMode = .scaleAspectFit
+
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 60, height: 24))
+        leftImageView.frame = containerView.bounds
+        containerView.addSubview(leftImageView)
+
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: containerView)
+        self.navigationController?.navigationBar.backgroundColor = UIColor(hex: "#161824")
     }
 
     @objc func openSettings() {

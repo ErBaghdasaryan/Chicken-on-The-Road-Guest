@@ -104,8 +104,8 @@ class OnboardingViewController: BaseViewController, UICollectionViewDelegate {
 
         pageControl.snp.makeConstraints { view in
             view.top.equalTo(headerImage.snp.bottom).offset(12)
-            view.centerX.equalTo(headerImage.snp.centerX)
-            view.width.equalTo(30)
+            view.leading.equalToSuperview().offset(176)
+            view.trailing.equalToSuperview().inset(176)
             view.height.equalTo(8)
         }
 

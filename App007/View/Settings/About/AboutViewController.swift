@@ -38,6 +38,7 @@ class AboutViewController: BaseViewController {
         self.backButton.layer.masksToBounds = true
         self.backButton.layer.cornerRadius = 30
 
+        self.text.isUserInteractionEnabled = false
         self.text.textAlignment = .center
         self.text.text = """
         
@@ -99,7 +100,7 @@ extension AboutViewController {
 
     @objc func backTapped() {
         guard let navigationController = self.navigationController else { return }
-        navigationController.popViewController(animated: true)
+        SettingsRouter.popViewController(in: navigationController)
     }
 }
 

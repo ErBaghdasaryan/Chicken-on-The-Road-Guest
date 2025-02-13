@@ -18,6 +18,8 @@ final class HomeRouter: BaseRouter {
     }
 
     static func showSpendViewController(in navigationController: UINavigationController) {
+        guard let homeVC = navigationController.viewControllers.first as? HomeViewController else { return }
+
         let viewController = ViewControllerFactory.makeSpendViewController()
         viewController.navigationItem.hidesBackButton = true
         navigationController.navigationBar.isHidden = false
@@ -28,10 +30,22 @@ final class HomeRouter: BaseRouter {
             sheet.prefersGrabberVisible = true
         }
 
-        navigationController.present(viewController, animated: true, completion: nil)
+        UIView.animate(withDuration: 0.3) {
+            homeVC.dimmingView.alpha = 1
+        }
+
+        navigationController.present(viewController, animated: true) {
+            viewController.dismissCompletion = {
+                UIView.animate(withDuration: 0.3) {
+                    homeVC.dimmingView.alpha = 0
+                }
+            }
+        }
     }
 
     static func showReceiveViewController(in navigationController: UINavigationController) {
+        guard let homeVC = navigationController.viewControllers.first as? HomeViewController else { return }
+
         let viewController = ViewControllerFactory.makeReceiveViewController()
         viewController.navigationItem.hidesBackButton = true
         navigationController.navigationBar.isHidden = false
@@ -42,6 +56,16 @@ final class HomeRouter: BaseRouter {
             sheet.prefersGrabberVisible = true
         }
 
-        navigationController.present(viewController, animated: true)
+        UIView.animate(withDuration: 0.3) {
+            homeVC.dimmingView.alpha = 1
+        }
+
+        navigationController.present(viewController, animated: true) {
+            viewController.dismissCompletion = {
+                UIView.animate(withDuration: 0.3) {
+                    homeVC.dimmingView.alpha = 0
+                }
+            }
+        }
     }
 }

@@ -20,9 +20,16 @@ class ReceiveViewController: UIViewController {
                             font: UIFont(name: "Knewave-Regular", size: 24))
     private var labelStack: UIStackView!
 
+    var dismissCompletion: (() -> Void)?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        dismissCompletion?()
     }
 
     private func setupUI() {
