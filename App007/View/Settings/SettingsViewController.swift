@@ -20,17 +20,16 @@ class SettingsViewController: BaseViewController {
     private let privacy = SettingsButton()
     private let terms = SettingsButton()
     private let backButton = UIButton(type: .system)
-    private let pushNtf = UILabel(text: "Push Notifications",
-                                  textColor: .white,
-                                  font: UIFont(name: "SFProText-Bold", size: 17))
-    private let stayUpdate = UILabel(text: "Stay updated & control your experience!",
-                                     textColor: .white.withAlphaComponent(0.7),
-                                     font: UIFont(name: "SFProText-Regular", size: 15))
-    private let ntfSwitch = UISwitch()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         makeButtonsAction()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.backgroundColor = UIColor(hex: "#161824")
     }
 
     override func setupUI() {
@@ -39,8 +38,6 @@ class SettingsViewController: BaseViewController {
         self.view.backgroundColor = UIColor(hex: "#161824")
 
         self.header.textAlignment = .left
-        self.pushNtf.textAlignment = .left
-        self.stayUpdate.textAlignment = .left
 
         self.backButton.setTitle("Back", for: .normal)
         self.backButton.setTitleColor(.black, for: .normal)
@@ -53,16 +50,10 @@ class SettingsViewController: BaseViewController {
         self.privacy.setTitle("Privacy Policy", for: .normal)
         self.terms.setTitle("Terms", for: .normal)
 
-        self.ntfSwitch.isOn = false
-        ntfSwitch.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
-
         self.view.addSubview(header)
         self.view.addSubview(descriptionn)
         self.view.addSubview(privacy)
         self.view.addSubview(terms)
-        self.view.addSubview(pushNtf)
-        self.view.addSubview(stayUpdate)
-        self.view.addSubview(ntfSwitch)
         self.view.addSubview(backButton)
         setupConstraints()
     }
@@ -100,27 +91,6 @@ class SettingsViewController: BaseViewController {
             view.height.equalTo(24)
         }
 
-        pushNtf.snp.makeConstraints { view in
-            view.top.equalTo(terms.snp.bottom).offset(28)
-            view.leading.equalToSuperview().offset(16)
-            view.trailing.equalToSuperview().inset(16)
-            view.height.equalTo(24)
-        }
-
-        stayUpdate.snp.makeConstraints { view in
-            view.top.equalTo(pushNtf.snp.bottom).offset(7)
-            view.leading.equalToSuperview().offset(16)
-            view.trailing.equalToSuperview().inset(16)
-            view.height.equalTo(24)
-        }
-
-        ntfSwitch.snp.makeConstraints { view in
-            view.centerY.equalTo(pushNtf.snp.centerY)
-            view.trailing.equalToSuperview().inset(16)
-            view.height.equalTo(31)
-            view.width.equalTo(51)
-        }
-
         backButton.snp.makeConstraints { view in
             view.bottom.equalToSuperview().inset(60)
             view.leading.equalToSuperview().offset(16)
@@ -154,11 +124,13 @@ extension SettingsViewController {
     }
 
     @objc func termsTapped() {
-        
+        guard let navigationController = self.navigationController else { return }
+        SettingsRouter.showTermsViewController(in: navigationController)
     }
 
     @objc func privacyTapped() {
-        
+        guard let navigationController = self.navigationController else { return }
+        SettingsRouter.showPrivacyViewController(in: navigationController)
     }
 
     @objc func switchChanged(_ sender: UISwitch) {
