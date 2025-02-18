@@ -18,7 +18,7 @@ final class HomeRouter: BaseRouter {
     }
 
     static func showSpendViewController(in navigationController: UINavigationController) {
-        guard let homeVC = navigationController.viewControllers.first as? HomeViewController else { return }
+        guard let homeVC = navigationController.viewControllers.first(where: { $0 is HomeViewController }) as? HomeViewController else { return }
 
         let viewController = ViewControllerFactory.makeSpendViewController()
         viewController.navigationItem.hidesBackButton = true
@@ -44,7 +44,7 @@ final class HomeRouter: BaseRouter {
     }
 
     static func showReceiveViewController(in navigationController: UINavigationController) {
-        guard let homeVC = navigationController.viewControllers.first as? HomeViewController else { return }
+        guard let homeVC = navigationController.viewControllers.first(where: { $0 is HomeViewController }) as? HomeViewController else { return }
 
         let viewController = ViewControllerFactory.makeReceiveViewController()
         viewController.navigationItem.hidesBackButton = true
